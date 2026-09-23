@@ -5,27 +5,15 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const VARIANT_CLASSES: Record<string, string> = {
-  primary: 'bg-blue-600 text-white hover:bg-blue-700',
-  secondary: 'bg-gray-200 text-gray-900 hover:bg-gray-300',
-  danger: 'bg-red-600 text-white hover:bg-red-700',
+  primary: 'bg-violet-600 text-white hover:bg-violet-700 shadow-sm',
+  secondary: 'bg-gray-100 text-gray-700 hover:bg-gray-200',
+  danger: 'bg-red-500 text-white hover:bg-red-600',
 };
 
-export default function Button({
-  variant = 'primary',
-  className = '',
-  children,
-  ...rest
-}: ButtonProps) {
+export default function Button({ variant = 'primary', className = '', children, ...rest }: ButtonProps) {
+  const classes = 'px-4 py-2 rounded-lg text-sm font-medium transition-colors ' + VARIANT_CLASSES[variant] + ' ' + className;
   return (
-    <button
-      className={
-        'px-4 py-2 rounded-md text-sm font-medium transition-colors ' +
-        VARIANT_CLASSES[variant] +
-        ' ' +
-        className
-      }
-      {...rest}
-    >
+    <button className={classes} {...rest}>
       {children}
     </button>
   );
