@@ -1,13 +1,13 @@
-import Button from '../atoms/Button';
-import Input from '../atoms/Input';
-import FormField from '../molecules/FormField';
-import { Task } from '../molecules/TaskCard';
+import Button from "../atoms/Button";
+import Input from "../atoms/Input";
+import FormField from "../molecules/FormField";
+import { Task } from "../molecules/TaskCard";
 
 export interface TaskFormValues {
   title: string;
   description: string;
-  priority: Task['priority'];
-  status: Task['status'];
+  priority: Task["priority"];
+  status: Task["status"];
   dueDate: string;
 }
 
@@ -30,7 +30,7 @@ export default function TaskForm({
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center p-4 z-50">
       <div className="bg-white rounded-xl p-6 w-full max-w-md space-y-4 shadow-xl">
         <h2 className="text-lg font-semibold text-gray-900">
-          {isEditing ? 'Edit Task' : 'New Task'}
+          {isEditing ? "Edit Task" : "New Task"}
         </h2>
 
         <form onSubmit={onSubmit} className="space-y-3">
@@ -48,7 +48,9 @@ export default function TaskForm({
             <textarea
               id="description"
               value={values.description}
-              onChange={(e) => onChange({ ...values, description: e.target.value })}
+              onChange={(e) =>
+                onChange({ ...values, description: e.target.value })
+              }
               className="w-full border rounded-md px-3 py-2 text-sm"
               rows={3}
             />
@@ -60,7 +62,10 @@ export default function TaskForm({
                 id="priority"
                 value={values.priority}
                 onChange={(e) =>
-                  onChange({ ...values, priority: e.target.value as Task['priority'] })
+                  onChange({
+                    ...values,
+                    priority: e.target.value as Task["priority"],
+                  })
                 }
                 className="w-full border rounded-md px-3 py-2 text-sm"
               >
@@ -75,7 +80,10 @@ export default function TaskForm({
                 id="status"
                 value={values.status}
                 onChange={(e) =>
-                  onChange({ ...values, status: e.target.value as Task['status'] })
+                  onChange({
+                    ...values,
+                    status: e.target.value as Task["status"],
+                  })
                 }
                 className="w-full border rounded-md px-3 py-2 text-sm"
               >
@@ -97,9 +105,14 @@ export default function TaskForm({
 
           <div className="flex gap-2 pt-2">
             <Button type="submit" className="flex-1">
-              {isEditing ? 'Save Changes' : 'Create Task'}
+              {isEditing ? "Save Changes" : "Create Task"}
             </Button>
-            <Button type="button" variant="secondary" className="flex-1" onClick={onCancel}>
+            <Button
+              type="button"
+              variant="secondary"
+              className="flex-1"
+              onClick={onCancel}
+            >
               Cancel
             </Button>
           </div>

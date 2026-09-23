@@ -1,20 +1,20 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
-import Button from '@/components/atoms/Button';
-import TaskBoard from '@/components/organisms/TaskBoard';
-import TaskForm, { TaskFormValues } from '@/components/organisms/TaskForm';
-import DashboardLayout from '@/components/templates/DashboardLayout';
-import { Task } from '@/components/molecules/TaskCard';
+import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import Button from "@/components/atoms/Button";
+import TaskBoard from "@/components/organisms/TaskBoard";
+import TaskForm, { TaskFormValues } from "@/components/organisms/TaskForm";
+import DashboardLayout from "@/components/templates/DashboardLayout";
+import { Task } from "@/components/molecules/TaskCard";
 
 const emptyForm: TaskFormValues = {
-  title: '',
-  description: '',
-  priority: 'MEDIUM',
-  status: 'TODO',
-  dueDate: '',
+  title: "",
+  description: "",
+  priority: "MEDIUM",
+  status: "TODO",
+  dueDate: "",
 };
 
 export default function BoardPage() {
@@ -29,14 +29,14 @@ export default function BoardPage() {
   const userId = (session?.user as { id?: string })?.id;
 
   useEffect(() => {
-    if (status === 'unauthenticated') {
-      router.push('/login');
+    if (status === "unauthenticated") {
+      router.push("/login");
     }
   }, [status, router]);
 
   async function loadTasks() {
     if (!userId) return;
-    const res = await fetch('/api/tasks?userId=' + userId);
+    const res = await fetch("/api/tasks?userId=" + userId);
     if (res.ok) {
       const data = await res.json();
       setTasks(data);
@@ -48,7 +48,6 @@ export default function BoardPage() {
     if (session) {
       loadTasks();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session]);
 
   function openNewForm() {
@@ -60,10 +59,10 @@ export default function BoardPage() {
   function openEditForm(task: Task) {
     setForm({
       title: task.title,
-      description: task.description || '',
+      description: task.description || "",
       priority: task.priority,
       status: task.status,
-      dueDate: task.dueDate ? task.dueDate.slice(0, 10) : '',
+      dueDate: task.dueDate ? task.dueDate.slice(0, 10) : "",
     });
     setEditingId(task.id);
     setShowForm(true);
@@ -73,15 +72,15 @@ export default function BoardPage() {
     e.preventDefault();
 
     if (editingId) {
-      await fetch('/api/tasks/' + editingId, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
+      await fetch("/api/tasks/" + editingId, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
     } else {
-      await fetch('/api/tasks', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      await fetch("/api/tasks", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...form, userId }),
       });
     }
@@ -91,20 +90,20 @@ export default function BoardPage() {
   }
 
   async function handleDelete(id: string) {
-    await fetch('/api/tasks/' + id, { method: 'DELETE' });
+    await fetch("/api/tasks/" + id, { method: "DELETE" });
     loadTasks();
   }
 
-  async function handleStatusChange(id: string, newStatus: Task['status']) {
-    await fetch('/api/tasks/' + id, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
+  async function handleStatusChange(id: string, newStatus: Task["status"]) {
+    await fetch("/api/tasks/" + id, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ status: newStatus }),
     });
     loadTasks();
   }
 
-  if (status === 'loading' || loading) {
+  if (status === "loading" || loading) {
     return <div className="p-8 text-center text-gray-500">Loading...</div>;
   }
 

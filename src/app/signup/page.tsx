@@ -1,33 +1,33 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import AuthLayout from '@/components/templates/AuthLayout';
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import AuthLayout from "@/components/templates/AuthLayout";
 
 export default function SignupPage() {
   const router = useRouter();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [error, setError] = useState("");
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setError('');
+    setError("");
 
-    const res = await fetch('/api/signup', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+    const res = await fetch("/api/signup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password, name }),
     });
 
     if (!res.ok) {
       const data = await res.json();
-      setError(data.error || 'Signup failed');
+      setError(data.error || "Signup failed");
       return;
     }
 
-    router.push('/login');
+    router.push("/login");
   }
 
   return (
@@ -81,7 +81,10 @@ export default function SignupPage() {
         </button>
       </form>
       <p className="text-sm text-center text-gray-500">
-        Already have an account? <a href="/login" className="text-blue-600">Log in</a>
+        Already have an account?{" "}
+        <a href="/login" className="text-blue-600">
+          Log in
+        </a>
       </p>
     </AuthLayout>
   );

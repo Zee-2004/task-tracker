@@ -1,5 +1,5 @@
-import { ReactNode } from 'react';
-import Navbar from '../organisms/Navbar';
+import { ReactNode } from "react";
+import Navbar from "../organisms/Navbar";
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   return (

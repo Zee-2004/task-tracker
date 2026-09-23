@@ -1,30 +1,30 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { signIn } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
-import AuthLayout from '@/components/templates/AuthLayout';
+import { useState } from "react";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import AuthLayout from "@/components/templates/AuthLayout";
 
 export default function LoginPage() {
   const router = useRouter();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setError('');
+    setError("");
 
-    const res = await signIn('credentials', {
+    const res = await signIn("credentials", {
       email,
       password,
       redirect: false,
     });
 
     if (res?.error) {
-      setError('Invalid email or password');
+      setError("Invalid email or password");
     } else {
-      router.push('/dashboard');
+      router.push("/dashboard");
     }
   }
 
@@ -67,7 +67,10 @@ export default function LoginPage() {
         </button>
       </form>
       <p className="text-sm text-center text-gray-500">
-        No account? <a href="/signup" className="text-blue-600">Sign up</a>
+        No account?{" "}
+        <a href="/signup" className="text-blue-600">
+          Sign up
+        </a>
       </p>
     </AuthLayout>
   );
