@@ -1,7 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 
-export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
+export async function PATCH(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params;
   const body = await req.json();
 
   const data: Record<string, unknown> = {};
@@ -14,14 +18,18 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
   }
 
   const task = await prisma.task.update({
-    where: { id: params.id },
+    where: { id },
     data,
   });
 
   return NextResponse.json(task);
 }
 
-export async function DELETE(_req: NextRequest, { params }: { params: { id: string } }) {
-  await prisma.task.delete({ where: { id: params.id } });
+export async function DELETE(
+  _req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params;
+  await prisma.task.delete({ where: { id } });
   return NextResponse.json({ success: true });
 }
